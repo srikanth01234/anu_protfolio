@@ -15,6 +15,62 @@
             <div class="text-line">PORTFOLIO</div>
         </div>
     </div>
-    <script src="js/splash.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const splashContainer = document.querySelector('.splash-container');
+    const textLines = document.querySelectorAll('.text-line');
+    
+    // Set random breaking properties for each line
+    textLines.forEach(line => {
+        line.style.setProperty('--ty', Math.random() > 0.5 ? -1 : 1);
+        line.style.setProperty('--rot', `${(Math.random() - 0.5) * 180}deg`);
+    });
+    
+    // Start breaking animation after 3 seconds
+    setTimeout(() => {
+        splashContainer.classList.add('breaking');
+        
+        // Create particle explosion effect
+        createParticles();
+        
+        // Redirect after animation completes
+        setTimeout(() => {
+            window.location.href = 'splash.html';
+        }, 1500);
+    }, 3000);
+    
+    function createParticles() {
+        const particleCount = 100;
+        const container = document.querySelector('body');
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Random properties
+            const size = Math.random() * 8 + 2;
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            particle.style.setProperty('--px', `${(Math.random() - 0.5) * 500}px`);
+            particle.style.setProperty('--py', `${(Math.random() - 0.5) * 500}px`);
+            particle.style.animationDelay = `${Math.random() * 0.5}s`;
+            particle.style.opacity = Math.random() * 0.5 + 0.5;
+            
+            container.appendChild(particle);
+            
+            // Remove particle after animation
+            setTimeout(() => {
+                particle.remove();
+            }, 1000);
+        }
+    }
+});
+    </script>
+   
 </body>
 </html>
